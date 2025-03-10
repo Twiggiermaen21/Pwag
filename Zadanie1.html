@@ -1,0 +1,83 @@
+<html>
+
+<head>
+	<title>Vue</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+		crossorigin="anonymous">
+</head>
+
+<body>
+
+	<div id="app">
+		<header>
+			<h1 v-text="sitename"></h1>
+		</header>
+
+		<main>
+			<div class="row product">
+
+				<div class="col">
+					<figure>
+						<img v-bind:src="product.image">
+					</figure>
+				</div>
+
+				<div class="col col-expand">
+					<h1 v-text="product.title"></h1>
+					<p v-html="product.description"></p>
+					<p class="price">{{ product.price | formatPrice }}</p>
+					<p v-text="product.avaibleInventory"></p>
+				</div>
+
+			</div>
+		</main>
+
+	</div>
+
+	<script type="text/javascript">
+
+		var webstore = new Vue({
+			el: '#app',
+			data: {
+				sitename: 'Sklep',
+				product: {
+					id: 1001,
+					title: "Worek ziemniaków 10 kg",
+					description: "<li>10-kilogramowe opakowanie pysznych ziemniaków.</li>",
+					price: 1000,
+					image: "assets/images/potato.jpg",
+					avaibleInventory: 5
+				}
+			},
+			filters: {
+				formatPrice: function (priceValue) {
+					var formatter = new Intl.NumberFormat('pl-PL', {
+						style: 'currency',
+						currency: 'PLN',
+						minimumFractionDigits: 2
+
+
+					});
+					return formatter.format(priceValue);
+				}
+			},
+			cart: [],
+			mounted: {
+
+				addToCart: function () {
+					this.cart.push(this.product.id);
+				}
+			},
+			computed: {
+				fullName: function () {
+					return [this.firstName, this.lastName].join('')
+				}
+			}
+		});
+	</script>
+
+</body>
+
+</html>
