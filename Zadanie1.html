@@ -6,34 +6,58 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
 		crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+	<div class="container">
+		<div id="app">
+			<header>
+				<h1 v-text="sitename"></h1>
+				<button class="cart">
 
-	<div id="app">
-		<header>
-			<h1 v-text="sitename"></h1>
-		</header>
+					<img v-bind:src="cartIMG" class="cart-img">
+					<p>Zawartość koszyka {{ cartItems }}</p>
+				</button>
+			</header>
 
-		<main>
-			<div class="row product">
+			<main>
+				<div class="row product">
 
-				<div class="col">
-					<figure>
-						<img v-bind:src="product.image">
-					</figure>
+					<div class="col">
+						<figure>
+							<img v-bind:src="product.image">
+						</figure>
+					</div>
+
+					<div class="col col-expand">
+						<h1 v-text="product.title"></h1>
+						<div class="row">
+							<h5> Opis:</h5>
+							<p v-html="product.description"></p>
+						</div>
+						<div class="row">
+							<h5> Cena: </h5>
+							<p class="price">{{ product.price | formatPrice }}</p>
+						</div>
+						<div class="row">
+							<h5> Dostepność: </h5>
+							<p class="price" v-text="product.avaibleInventory"></p>
+							<p v-if="isLowStock" style="color: red; font-weight: bold;">⚠️ Ostatnie sztuki! Pośpiesz
+								się!
+							</p>
+						</div>
+						<button @click="addToCart" class="btn btn-primary" :disabled="product.avaibleInventory === 0">
+							{{ product.avaibleInventory > 0 ? 'Add to Cart' : 'Out of Stock' }}
+
+						</button>
+
+					</div>
+
 				</div>
+			</main>
 
-				<div class="col col-expand">
-					<h1 v-text="product.title"></h1>
-					<p v-html="product.description"></p>
-					<p class="price">{{ product.price | formatPrice }}</p>
-					<p v-text="product.avaibleInventory"></p>
-				</div>
-
-			</div>
-		</main>
-
+		</div>
 	</div>
 
 	<script type="text/javascript">
@@ -42,13 +66,16 @@
 			el: '#app',
 			data: {
 				sitename: 'Sklep',
+				cartIMG: 'assets/images/cart.png',
+				cart: [],
 				product: {
 					id: 1001,
 					title: "Worek ziemniaków 10 kg",
 					description: "<li>10-kilogramowe opakowanie pysznych ziemniaków.</li>",
 					price: 1000,
 					image: "assets/images/potato.jpg",
-					avaibleInventory: 5
+					avaibleInventory: 5,
+					initialInventory: 10
 				}
 			},
 			filters: {
@@ -63,17 +90,35 @@
 					return formatter.format(priceValue);
 				}
 			},
-			cart: [],
-			mounted: {
+
+			methods: {
 
 				addToCart: function () {
-					this.cart.push(this.product.id);
+					if (this.product.avaibleInventory > 0) {
+						this.cart.push(this.product.id);
+						this.product.avaibleInventory--;
+					}
 				}
 			},
 			computed: {
+				isLowStock() {
+					if (this.product.avaibleInventory < this.product.initialInventory * 0.3 && this.product.avaibleInventory !== 0)
+						return true;
+
+
+
+				},
+
 				fullName: function () {
 					return [this.firstName, this.lastName].join('')
+				},
+				cartItems: function () {
+					if (this.cart.length <= 0) {
+						return 'nic'
+					}
+					return this.cart.lenght;
 				}
+
 			}
 		});
 	</script>
