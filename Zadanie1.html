@@ -14,14 +14,14 @@
 		<div id="app">
 			<header>
 				<h1 v-text="sitename"></h1>
-				<button class="cart">
+				<button class="cart" @click="cartShow">
 
 					<img v-bind:src="cartIMG" class="cart-img">
-					<p>Zawartość koszyka {{ cartItems }}</p>
+					<p>Zawartość koszyka: {{ cartItems }}</p>
 				</button>
 			</header>
 
-			<main>
+			<main v-if="!showCart">
 				<div class="row product">
 
 					<div class="col">
@@ -47,6 +47,7 @@
 								się!
 							</p>
 						</div>
+
 						<button @click="addToCart" class="btn btn-primary" :disabled="product.avaibleInventory === 0">
 							{{ product.avaibleInventory > 0 ? 'Add to Cart' : 'Out of Stock' }}
 
@@ -56,6 +57,52 @@
 
 				</div>
 			</main>
+
+			<main-form v-else>
+
+				<div class="row product">
+					<div class="col-md-8">
+						<h2>Formularz zamówienia</h2>
+						<form @submit.prevent="submitOrder" class="form-order">
+							<!-- Imię -->
+							<div class="form-group">
+								<label for="firstName">Imię</label>
+								<input type="text" id="firstName" class="form-control" required />
+							</div>
+
+							<!-- Nazwisko -->
+							<div class="form-group">
+								<label for="lastName">Nazwisko</label>
+								<input type="text" id="lastName" class="form-control" required />
+							</div>
+
+							<!-- Adres -->
+							<div class="form-group">
+								<label for="address">Adres</label>
+								<input type="text" id="address" class="form-control" required />
+							</div>
+
+							<!-- Numer telefonu -->
+							<div class="form-group">
+								<label for="phone">Numer telefonu</label>
+								<input type="tel" id="phone" class="form-control" required />
+							</div>
+
+							<!-- E-mail -->
+							<div class="form-group">
+								<label for="email">E-mail</label>
+								<input type="email" id="email" class="form-control" required />
+							</div>
+
+							<br />
+							<button type="submit" class="btn btn-primary ">Złóż zamówienie</button>
+						</form>
+					</div>
+				</div>
+
+			</main-form>
+
+
 
 		</div>
 	</div>
@@ -68,6 +115,7 @@
 				sitename: 'Sklep',
 				cartIMG: 'assets/images/cart.png',
 				cart: [],
+				showCart: false,
 				product: {
 					id: 1001,
 					title: "Worek ziemniaków 10 kg",
@@ -98,7 +146,11 @@
 						this.cart.push(this.product.id);
 						this.product.avaibleInventory--;
 					}
+				},
+				cartShow: function () {
+					this.showCart = !this.showCart;
 				}
+
 			},
 			computed: {
 				isLowStock() {
@@ -113,10 +165,9 @@
 					return [this.firstName, this.lastName].join('')
 				},
 				cartItems: function () {
-					if (this.cart.length <= 0) {
-						return 'nic'
-					}
-					return this.cart.lenght;
+
+					console.log(this.showCart);
+					return this.cart.length;
 				}
 
 			}
