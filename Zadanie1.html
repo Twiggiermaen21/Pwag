@@ -156,17 +156,12 @@
 				isLowStock() {
 					if (this.product.avaibleInventory < this.product.initialInventory * 0.3 && this.product.avaibleInventory !== 0)
 						return true;
-
-
-
 				},
 
 				fullName: function () {
 					return [this.firstName, this.lastName].join('')
 				},
 				cartItems: function () {
-
-					console.log(this.showCart);
 					return this.cart.length;
 				}
 
