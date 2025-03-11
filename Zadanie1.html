@@ -23,13 +23,11 @@
 
 			<main v-if="!showCart">
 				<div class="row product">
-
 					<div class="col">
 						<figure>
 							<img v-bind:src="product.image">
 						</figure>
 					</div>
-
 					<div class="col col-expand">
 						<h1 v-text="product.title"></h1>
 						<div class="row">
@@ -64,36 +62,26 @@
 					<div class="col-md-8">
 						<h2>Formularz zamówienia</h2>
 						<form @submit.prevent="submitOrder" class="form-order">
-							<!-- Imię -->
 							<div class="form-group">
 								<label for="firstName">Imię</label>
 								<input type="text" id="firstName" class="form-control" required />
 							</div>
-
-							<!-- Nazwisko -->
 							<div class="form-group">
 								<label for="lastName">Nazwisko</label>
 								<input type="text" id="lastName" class="form-control" required />
 							</div>
-
-							<!-- Adres -->
 							<div class="form-group">
 								<label for="address">Adres</label>
 								<input type="text" id="address" class="form-control" required />
 							</div>
-
-							<!-- Numer telefonu -->
 							<div class="form-group">
 								<label for="phone">Numer telefonu</label>
 								<input type="tel" id="phone" class="form-control" required />
 							</div>
-
-							<!-- E-mail -->
 							<div class="form-group">
 								<label for="email">E-mail</label>
 								<input type="email" id="email" class="form-control" required />
 							</div>
-
 							<br />
 							<button type="submit" class="btn btn-primary ">Złóż zamówienie</button>
 						</form>
@@ -101,9 +89,6 @@
 				</div>
 
 			</main-form>
-
-
-
 		</div>
 	</div>
 

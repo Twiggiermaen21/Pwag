@@ -1,13 +1,11 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
-
 }
 
 .container {
     max-width: 1200px;
 }
-
 
 header {
     background-color: #4CAF50;
@@ -19,8 +17,6 @@ header {
     display: flex;
     justify-content: space-between;
 }
-
-
 
 .cart {
     display: flex;
@@ -38,7 +34,6 @@ header {
 
 .cart:hover {
     background-color: #0056b3;
-
     transform: scale(1.05);
 }
 
@@ -69,7 +64,6 @@ header button:hover {
     background-color: white;
     border-radius: 8px;
     overflow: hidden;
-
 }
 
 .col figure {
@@ -86,8 +80,6 @@ header button:hover {
 .col-expand {
     padding: 20px;
 }
-
-
 
 .col-expand h1 {
     color: #029402;
@@ -113,5 +105,4 @@ header button:hover {
 
 .col-md-8 {
     padding: 20px;
-
 }
